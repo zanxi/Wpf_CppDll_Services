@@ -1,0 +1,9 @@
+﻿  pch.cpp
+  conv.cpp
+  dllmain.cpp
+  mathlibrary.cpp
+  Processes_Modules.cpp
+  Services.cpp
+  Создание кода...
+     Создается библиотека D:\_V2020_\_Rabota_2020__\_Nuclear___\Win32_005\x64\Debug\Dll_Win32_002.lib и объект D:\_V2020_\_Rabota_2020__\_Nuclear___\Win32_005\x64\Debug\Dll_Win32_002.exp
+  Dll_Win32_002.vcxproj -> D:\_V2020_\_Rabota_2020__\_Nuclear___\Win32_005\x64\Debug\Dll_Win32_002.dll

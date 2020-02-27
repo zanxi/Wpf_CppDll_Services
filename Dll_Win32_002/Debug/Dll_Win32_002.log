@@ -1,0 +1,39 @@
+﻿  pch.cpp
+  conv.cpp
+  dllmain.cpp
+  mathlibrary.cpp
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\mathlibrary.cpp(18,1): warning C4273: fibonacci_init: несовместимое связывание dll
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\MathLibrary.h(23,33): message : см. предыдущее определение "fibonacci_init"
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\mathlibrary.cpp(27,1): warning C4273: fibonacci_next: несовместимое связывание dll
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\MathLibrary.h(32,33): message : см. предыдущее определение "fibonacci_next"
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\mathlibrary.cpp(48,1): warning C4273: fibonacci_current: несовместимое связывание dll
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\MathLibrary.h(37,47): message : см. предыдущее определение "fibonacci_current"
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\mathlibrary.cpp(54,1): warning C4273: fibonacci_index: несовместимое связывание dll
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\MathLibrary.h(42,37): message : см. предыдущее определение "fibonacci_index"
+  Processes_Modules.cpp
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Processes_Modules.cpp(31,1): warning C4273: PIDByName: несовместимое связывание dll
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Processes_Modules.h(12,40): message : см. предыдущее определение "PIDByName"
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Processes_Modules.cpp(52,1): warning C4273: GetPathProcess: несовместимое связывание dll
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Processes_Modules.h(13,41): message : см. предыдущее определение "GetPathProcess"
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Processes_Modules.cpp(61,69): warning C4273: PrintModuleList: несовместимое связывание dll
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Processes_Modules.h(14,39): message : см. предыдущее определение "PrintModuleList"
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Processes_Modules.cpp(97,15): warning C4101: filename: неиспользованная локальная переменная
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Processes_Modules.cpp(180,1): warning C4273: KillProcess: несовместимое связывание dll
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Processes_Modules.h(16,39): message : см. предыдущее определение "KillProcess"
+  Services.cpp
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Services.h(104,80): warning C4190: для "GetInfoServicesWindowSystem" задана С-связывание, но возвращаемый тип UDT "std::basic_string<char,std::char_traits<char>,std::allocator<char>>" несовместим с языком Си
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.24.28314\include\xstring(4448): message : см. объявление "std::basic_string<char,std::char_traits<char>,std::allocator<char>>"
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Services.h(105,87): warning C4190: для "GetServiceConfig" задана С-связывание, но возвращаемый тип UDT "std::basic_string<char,std::char_traits<char>,std::allocator<char>>" несовместим с языком Си
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.24.28314\include\xstring(4448): message : см. объявление "std::basic_string<char,std::char_traits<char>,std::allocator<char>>"
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Services.cpp(130,1): warning C4273: GetServiceConfig: несовместимое связывание dll
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Services.h(105,46): message : см. предыдущее определение "GetServiceConfig"
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Services.cpp(222,1): warning C4273: InitInfoServicesWindowSystem: несовместимое связывание dll
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Services.h(106,38): message : см. предыдущее определение "InitInfoServicesWindowSystem"
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Services.cpp(228,1): warning C4273: GetInfoServicesWindowSystem: несовместимое связывание dll
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Services.h(104,46): message : см. предыдущее определение "GetInfoServicesWindowSystem"
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Services.cpp(234,15): warning C4018: >: несоответствие типов со знаком и без знака
+  Создание кода...
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Services.cpp(253): warning C4715: GetInfoServicesWindowSystem: значение возвращается не при всех путях выполнения
+D:\_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Processes_Modules.cpp(58): warning C4172: возвращение адреса локальной или временной переменной : path
+     Создается библиотека D:\_V2020_\_Rabota_2020__\_Nuclear___\Win32_005\Debug\Dll_Win32_002.lib и объект D:\_V2020_\_Rabota_2020__\_Nuclear___\Win32_005\Debug\Dll_Win32_002.exp
+  Dll_Win32_002.vcxproj -> D:\_V2020_\_Rabota_2020__\_Nuclear___\Win32_005\Debug\Dll_Win32_002.dll
