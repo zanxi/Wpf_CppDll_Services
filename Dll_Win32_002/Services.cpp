@@ -1,7 +1,9 @@
 #include "pch.h" // use stdafx.h in Visual Studio 2017 and earlier
 #include <utility>
 #include <limits.h>
+#include <sstream>
 #include ".\Services.h"
+#include ".\Processes_Modules.h"
 #include ".\conv.h"
 
 
@@ -140,7 +142,7 @@ std::string GetServiceConfig(LPCTSTR lpszServiceName)
         NULL, // local machine
         NULL, // SERVICES_ACTIVE_DATABASE database is opened by default
         SC_MANAGER_ALL_ACCESS); // full access rights, not a good choice
-    if (NULL == schSCManager) { return " error schSCManager  | "; }    
+    if (NULL == schSCManager) { return " error - no admin privilage  | error - no admin privilage "; }    
     else {};
 
     schService = OpenService(
@@ -150,7 +152,7 @@ std::string GetServiceConfig(LPCTSTR lpszServiceName)
     if (schService == NULL)
     {
         //printf("OpenService() failed, error: %d", GetLastError());
-        return " error schService  | ";
+        return " error - no admin privilage  | error - no admin privilage ";
         //return FALSE;
     }
     else {}
@@ -160,14 +162,14 @@ std::string GetServiceConfig(LPCTSTR lpszServiceName)
     lpqscBuf = (LPQUERY_SERVICE_CONFIG)LocalAlloc(LPTR, 4096);
     if (lpqscBuf == NULL)
     {
-        return " error Alloc lpqscBuf  | ";
+        return " error - no admin privilage  | error - no admin privilage ";
         //return FALSE;
     }
 
     lpqscBuf2 = (LPSERVICE_DESCRIPTION)LocalAlloc(LPTR, 4096);
     if (lpqscBuf2 == NULL)
     {
-        return " error Alloc lpqscBuf2  | ";
+        return " error - no admin privilage  | error - no admin privilage ";
         //return FALSE;
     }
     // Get the Windows service configuration information.
@@ -181,13 +183,19 @@ std::string GetServiceConfig(LPCTSTR lpszServiceName)
 
         if (!QueryServiceConfig2(schService, SERVICE_CONFIG_DESCRIPTION, (LPBYTE)lpqscBuf2, 4096, &dwBytesNeeded))
         {
-            return " | ";
+            return " error - no admin privilage  | error - no admin privilage ";
             bSuccess = FALSE;
         }
         else {}
     
-    if (lpqscBuf->lpLoadOrderGroup != NULL)
+    if (lpqscBuf->lpLoadOrderGroup != NULL) 
+    {                
+        std::stringstream ss;
+        ss << lpqscBuf->dwServiceType;
+        //std::string strPid = ss.str();
         str_group_path += conv::stdlocal::convert(lpqscBuf->lpLoadOrderGroup) + rl;
+        //str_group_path += strPid +":"+conv::stdlocal::convert(lpqscBuf->lpDependencies) + rl;
+    }
     else str_group_path += " " + rl;
     str_group_path += conv::stdlocal::convert(lpqscBuf->lpBinaryPathName);
         
@@ -211,11 +219,6 @@ int GetCountServicesWindowSystem()
     return ::services.size();
 }
 
-// Серьезность	Код	Описание	Проект	Файл	Строка	Состояние подавления
-//Ошибка	C4996	'strcpy': This function or variable may be unsafe.Consider using strcpy_s instead.To disable deprecation, 
-//use _CRT_SECURE_NO_WARNINGS.See online help for details.Dll_Win32_002	D : \_V2020_\_Rabota_2020__\_Nuclear___\Dll_Win32_002\Services.cpp	238
-
-
 char* GetInfoServicesWindowSystem(int k)
 {   
     //return new char[20]{" errrorr "};
@@ -236,11 +239,20 @@ char* GetInfoServicesWindowSystem(int k)
 //    if (k<0||k>::services.size())return "";
     //for (int k = 0; k < services.size(); k++)
     std::string str_info = "";
+
+
+    //std::wstring wstrProcToSearch;
+    //std::wcin >> wstrProcToSearch;
+    const WCHAR* wpszProcToSearch = ::services[k].ServiceName.c_str();
+    std::stringstream ss;    
+    ss << PIDByName((WCHAR*)wpszProcToSearch);
+    std::string strPid = ss.str();
+
     
     string group_path = GetServiceConfig(::services[k].ServiceName.c_str());
     str_info += conv::stdlocal::convert(::services[k].ServiceName) +
         rl + // Name service
-        "12345" +
+        strPid +
         rl + // pid service
         conv::stdlocal::convert(::services[k].DisplayName) +
         rl +  // descriptiopn

@@ -55,29 +55,31 @@ namespace Win32_005.Models
     }
 
     public class Orders : ObservableCollection<Order>
-    {        
+    {
         public Orders()
         {
-            //new Thread(() =>{ InfoWindowsDervices.Init(); });
-            //Thread.Sleep(2000);
-            InfoWindowsDervices.Init();
-
-            for (int i = 0; i < InfoWindowsDervices.GetCountSrv(); i++)
             {
-                string[] s_in= InfoWindowsDervices.GetInfoSrv(i);
-                this.Add(
-                    new Order
+                InfoWindowsDervices.Init();
+                {
+                    for (int i = 0; i < InfoWindowsDervices.GetCountSrv(); i++)
                     {
-                        NameSrv = s_in[0],
-                        PID = int.Parse(s_in[1]),
-                        Description = s_in[2],
-                        Status = s_in[3],
-                        GroupSystem = s_in[4],
-                        PathSrv = s_in[5]
+                        string[] s_in = InfoWindowsDervices.GetInfoSrv(i);
+                        this.Add(
+                            new Order
+                            {
+                                NameSrv = s_in[0],
+                                PID = int.Parse(s_in[1]),
+                                Description = s_in[2],
+                                Status = s_in[3],
+                                GroupSystem = s_in[4],
+                                PathSrv = s_in[5]
+                            }
+                            );
+                        if (i > InfoWindowsDervices.GetCountSrv() - 2) break;
                     }
-                    );
-                if (i > 10) break;
-            }   
+                }
+            }
         }
+         
     }
 }

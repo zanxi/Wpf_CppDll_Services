@@ -5,46 +5,66 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Win32_005.ViewModels"
         mc:Ignorable="d"
-        Title="Windows services (start, stop, restart)" Height="450" Width="800">
+        Title="Windows services (start, stop, restart)" Height="850" HorizontalAlignment="Center">
+    <!--
+    https://ru.stackoverflow.com/questions/717468/Контекстное-меню-datagrid-Получить-значение?rq=1
+    -->
     <Window.Resources>
         <local:GroupsToTotalConverter x:Key="groupsConverter" />
+        <ContextMenu x:Key="conMenu">
+            <MenuItem Name="start_menu"  Header="Start"
+          Command="{Binding DataContext.contextMenuCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+          CommandParameter="{Binding}"/>                        
+            <MenuItem Name="stop_menu" Header="Stop" />
+            <MenuItem  Name="restart_menu" Command="Copy" Header="Restart" />
+        </ContextMenu>
     </Window.Resources>
     <Grid>
         <StackPanel>
-            <DataGrid Height="250" ItemsSource="{Binding OrdersView}">
+            <DataGrid Height="750" ItemsSource="{Binding OrdersView}" 
+                      SelectionMode="Single" 
+                      SelectionUnit="FullRow" MouseRightButtonUp="DataGrid_MouseRightButtonUp"
+                       RenderOptions.EdgeMode="Aliased" UseLayoutRounding="True">
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                        <Setter Property="BorderBrush" Value="White"/>
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="ContextMenu" Value="{DynamicResource conMenu}"/>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <DockPanel Background="Red">
-                                    <TextBlock Text="{Binding Path=Name, Converter={StaticResource completeConverter}}" 
-                                               Foreground="Blue" Margin="30,0,0,0" Width="100"/>
-                                </DockPanel>
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
+                    <GroupStyle>                        
                         <GroupStyle.ContainerStyle>
                             <Style TargetType="{x:Type GroupItem}">
                                 <Setter Property="Margin" Value="0,0,0,5"/>
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type GroupItem}">
-                                            <Expander BorderBrush="red"
+                                            <Expander BorderBrush="Yellow"
                                                       IsExpanded="True"
-                                                      Background="Red"
+                                                      Background="YellowGreen"
                                                       BorderThickness="0,0,0,1">
                                                 <Expander.Header>
                                                     <StackPanel Orientation="Horizontal">
+                                                        <TextBlock VerticalAlignment="Center"                                                                   
+                                                                   Text="["/>
                                                         <TextBlock VerticalAlignment="Center"
                                                                    FontWeight="Bold"
                                                                    Text="{Binding Path=Name}"
-                                                                   Width="100"/>
+                                                                   Width="200"/>
                                                         <TextBlock VerticalAlignment="Center"                                                                   
-                                                                   Text="Item count: "/>
+                                                                   Text="]"/>
+                                                        <TextBlock VerticalAlignment="Center"                                                                   
+                                                                   Text="; Колличество служб в группе: "/>
                                                         <TextBlock FontWeight="Bold"
                                                                    Text="{Binding ItemCount}"/>
                                                         <TextBlock VerticalAlignment="Center"
                                                                    TextAlignment="Right"                                                                   
-                                                                   Text="Description"
+                                                                   Text="; Description: "
                                                                    Width="100"/>
                                                         <TextBlock FontWeight="Bold"
                                                                    VerticalAlignment="Center"
@@ -65,9 +85,9 @@
             </DataGrid>
 
             <StackPanel Orientation="Horizontal" Height="25">
-                <Button Command="{Binding removeGroupCommand}"> Remove group </Button>
-                <Button Command="{Binding groupByPIDCommand}"> By PID </Button>
-                <Button Command="{Binding groupByYearMonthCommand}">By Year/Month</Button>
+                <Button Command="{Binding groupByDescriptionCommand}" Width="250"> Sort by Description </Button>                
+                <Button Command="{Binding groupByStatusCommand}" Width="250"> Sort By Status </Button>
+                <Button Command="{Binding groupByGroupSystemCommand}" Width="250">Sort by GroupSystem</Button>
             </StackPanel>
         </StackPanel>        
     </Grid>
