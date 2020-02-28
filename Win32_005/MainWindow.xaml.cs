@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,14 +22,22 @@ namespace Win32_005
     /// </summary>
     public partial class MainWindow : Window
     {
+        static ViewModels.OrdersViewModel ord = new ViewModels.OrdersViewModel();
         public MainWindow()
         {
-            InitializeComponent();
-            DataContext = new ViewModels.OrdersViewModel();            
+            InitializeComponent();            
+            DataContext = ord;
+            
+            //ObservableCollection<OrderIcon> oi=new ObservableCollection<OrderIcon>();
+            //dgSrv.ItemsSource = ord.OrdersView.(ord.OrdersView, (p, p1) => new { Order = p, OrderIcon = p1 });
+            
+            // ItemsSource="{Binding OrdersView}"
         }
 
         private void DataGrid_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
+            return;
+            
             // 28 febrary
             //https://stackoverflow.com/questions/13449413/how-to-acess-datagridcell-on-right-click-on-wpf-datagrid
 

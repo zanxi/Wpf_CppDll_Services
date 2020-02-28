@@ -46,12 +46,30 @@ namespace Win32_005.Models
 
     public class Order
     {
+        public string Icon { get { return ".\\Images\\IconSrv.png";  } }
         public string NameSrv { get; set; }
         public int PID { get; set; }
         public string Description { get; set; }
         public string Status { get; set; }
         public string GroupSystem { get; set; }
         public string PathSrv { get; set; }
+    }
+
+    public class OrderIcon
+    {
+        public string Icon { get; set; }
+    }
+
+    public class OrdersIcon : ObservableCollection<OrderIcon>
+    {
+        public OrdersIcon()
+        {
+            for (int i = 0; i < InfoWindowsDervices.GetCountSrv(); i++)
+            {
+                this.Add(new OrderIcon { Icon = ".\\Images\\IconSrv.png" });
+                if (i > 11 + 0 * InfoWindowsDervices.GetCountSrv() - 2) break;
+            }
+        }            
     }
 
     public class Orders : ObservableCollection<Order>
@@ -75,7 +93,7 @@ namespace Win32_005.Models
                                 PathSrv = s_in[5]
                             }
                             );
-                        if (i > InfoWindowsDervices.GetCountSrv() - 2) break;
+                        if (i > 11+0*InfoWindowsDervices.GetCountSrv() - 2) break;
                     }
                 }
             }

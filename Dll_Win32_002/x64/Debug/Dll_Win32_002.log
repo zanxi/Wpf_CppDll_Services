@@ -1,9 +1,11 @@
 ﻿  pch.cpp
-  conv.cpp
-  dllmain.cpp
-  mathlibrary.cpp
-  Processes_Modules.cpp
   Services.cpp
+  Processes_Modules.cpp
+  mathlibrary.cpp
+  dllmain.cpp
+  conv.cpp
   Создание кода...
      Создается библиотека D:\_V2020_\_Rabota_2020__\_Nuclear___\Win32_005\x64\Debug\Dll_Win32_002.lib и объект D:\_V2020_\_Rabota_2020__\_Nuclear___\Win32_005\x64\Debug\Dll_Win32_002.exp
+Services.obj : warning LNK4217: локально определенный символ PIDByName импортирован в функцию GetInfoServicesWindowSystem
   Dll_Win32_002.vcxproj -> D:\_V2020_\_Rabota_2020__\_Nuclear___\Win32_005\x64\Debug\Dll_Win32_002.dll
+  Dll_Win32_002.vcxproj -> D:\_V2020_\_Rabota_2020__\_Nuclear___\Win32_005\x64\Debug\Dll_Win32_002.pdb (Full PDB)

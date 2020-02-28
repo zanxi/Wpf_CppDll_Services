@@ -15,6 +15,12 @@ namespace Win32_005.ViewModels
     public class OrdersViewModel
     {
         public ICollectionView OrdersView { get; set; }
+        public ICollectionView OrdersIconView { get; set; }
+
+        //public ObservableCollection<Order> OrdersView { get; set; }
+        //public ObservableCollection<OrdersIcon> OrdersIconView { get; set; }
+        //public ICollectionView OrdersIconView { get; set; }
+
 
         // 28 febrary 2020
         // https://ru.stackoverflow.com/questions/717468/Контекстное-меню-datagrid-Получить-значение?rq=1
@@ -22,7 +28,11 @@ namespace Win32_005.ViewModels
         public OrdersViewModel()
         {
             IList<Order> orders = new Orders();
-            OrdersView = CollectionViewSource.GetDefaultView(orders);                                                             
+            OrdersView = CollectionViewSource.GetDefaultView(orders);
+            //OrdersView = new Orders();
+            IList<OrderIcon> ordersIcon = new OrdersIcon();
+            OrdersIconView = CollectionViewSource.GetDefaultView(ordersIcon);
+            //OrdersIconView = new OrdersIcon();
 
             groupByDescriptionCommand = new GroupByDescriptionCommand(this);
             groupByPIDCommand = new GroupByPIDCommand(this);

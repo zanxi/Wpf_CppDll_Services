@@ -21,10 +21,80 @@
     </Window.Resources>
     <Grid>
         <StackPanel>
-            <DataGrid Height="750" ItemsSource="{Binding OrdersView}" 
+            <DataGrid Name="dgSrv" Height="750"                       
+                      ItemsSource="{Binding DataContext.OrdersView, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                       SelectionMode="Single" 
-                      SelectionUnit="FullRow" MouseRightButtonUp="DataGrid_MouseRightButtonUp"
-                       RenderOptions.EdgeMode="Aliased" UseLayoutRounding="True">
+                      SelectionUnit="FullRow" 
+                      MouseRightButtonUp="DataGrid_MouseRightButtonUp"
+                       RenderOptions.EdgeMode="Aliased" 
+                      UseLayoutRounding="True"
+                      AutoGenerateColumns="False"
+                      HorizontalAlignment="Stretch">
+                <DataGrid.Columns>                                        
+                    <DataGridTemplateColumn Header="Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="20" Width="20" Source="{Binding Path=Icon}"/>
+                                    <TextBlock Text="{Binding Path=NameSrv}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>                        
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="PID">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">                                    
+                                    <TextBlock Text="{Binding Path=PID}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Description">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Path=Description}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Status">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Path=Status}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="GroupSystem">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Path=GroupSystem}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="PathSrv">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Path=PathSrv}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+
+
+                </DataGrid.Columns>
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">
                         <Setter Property="BorderThickness" Value="0,0,1,0"/>
