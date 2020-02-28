@@ -3,20 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Win32_005.ViewModels"
+        xmlns:local="clr-namespace:Win32_005.ViewModels"        
         mc:Ignorable="d"
         Title="Windows services (start, stop, restart)" Height="850" HorizontalAlignment="Center">
     <!--
     https://ru.stackoverflow.com/questions/717468/Контекстное-меню-datagrid-Получить-значение?rq=1
     -->
     <Window.Resources>
-        <local:GroupsToTotalConverter x:Key="groupsConverter" />
+        <local:GroupsToTotalConverter x:Key="groupsConverter" />        
         <ContextMenu x:Key="conMenu">
             <MenuItem Name="start_menu"  Header="Start"
           Command="{Binding DataContext.contextMenuCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
           CommandParameter="{Binding}"/>                        
             <MenuItem Name="stop_menu" Header="Stop" />
-            <MenuItem  Name="restart_menu" Command="Copy" Header="Restart" />
+            <MenuItem  Name="restart_menu" Command="Copy" Header="Restart" />            
         </ContextMenu>
     </Window.Resources>
     <Grid>

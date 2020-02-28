@@ -12,11 +12,11 @@ namespace Win32_005.Models
 
     public class InfoWindowsDervices
     {
-        [DllImport("D:\\_V2020_\\_Rabota_2020__\\_Nuclear___\\Win32_005\\x64\\Debug\\Dll_Win32_002",
+        [DllImport("Dll_Win32_002",
             EntryPoint = "InitInfoServicesWindowSystem")]
         static extern int InitInfo();
 
-        [DllImport("D:\\_V2020_\\_Rabota_2020__\\_Nuclear___\\Win32_005\\x64\\Debug\\Dll_Win32_002",
+        [DllImport("Dll_Win32_002",
             EntryPoint = "GetInfoServicesWindowSystem")]
         static extern System.IntPtr GetInfo(int k);
 

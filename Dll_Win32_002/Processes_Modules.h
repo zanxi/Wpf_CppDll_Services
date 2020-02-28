@@ -10,7 +10,7 @@
 
 //extern "C" Processes_Modules_API void GetPath();
 extern "C" Processes_Modules_API DWORD PIDByName(WCHAR* AProcessName);
-extern "C" Processes_Modules_API TCHAR* GetPathProcess(DWORD pID);
+//extern "C" Processes_Modules_API TCHAR* GetPathProcess(DWORD pID);
 extern "C" Processes_Modules_API VOID PrintModuleList(HANDLE CONST hStdOut, DWORD CONST dwProcessId);
 
 extern "C" Processes_Modules_API BOOL KillProcess( 	IN DWORD dwProcessId );

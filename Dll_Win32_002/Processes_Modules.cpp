@@ -54,7 +54,7 @@ TCHAR* GetPathProcess(DWORD pID)
     HANDLE pHandle = OpenProcess(PROCESS_ALL_ACCESS, 0, pID);
     HMODULE mod = GetModuleHandle(L"ntdll.dll"); // Если же нужен весь список модулей, то соответственно объявляем массив.
     //EnumProcessModules(pHandle, &mod, sizeof(HMODULE), NULL);
-    GetModuleFileNameEx(pHandle, 0, path, 255);
+    //GetModuleFileNameEx(pHandle, 0, path, 255);
     return path;
 }
 
@@ -96,8 +96,8 @@ VOID PrintProcessList(HANDLE CONST hStdOut) {
     do {
         TCHAR filename[MAX_PATH];
         //GetModuleFileNameEx(&peProcessEntry., NULL, filename, MAX_PATH);
-        wsprintf(szBuff, L"====== %08X %s ====%s===\r\n",
-            peProcessEntry.th32ProcessID, peProcessEntry.szExeFile, GetPathProcess(PIDByName(peProcessEntry.szExeFile)));
+        wsprintf(szBuff, L"====== %08X %s =======\r\n",
+			peProcessEntry.th32ProcessID, peProcessEntry.szExeFile);// , GetPathProcess(PIDByName(peProcessEntry.szExeFile)));
 
         WriteConsole(hStdOut, szBuff, lstrlen(szBuff), &dwTemp, NULL);
         PrintModuleList(hStdOut, peProcessEntry.th32ProcessID);
