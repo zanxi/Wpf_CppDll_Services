@@ -93,7 +93,7 @@ namespace Win32_005.Models
                                 PathSrv = s_in[5]
                             }
                             );
-                        if (i > 11+0*InfoWindowsDervices.GetCountSrv() - 2) break;
+                        if (i > InfoWindowsDervices.GetCountSrv() - 2) break;
                     }
                 }
             }

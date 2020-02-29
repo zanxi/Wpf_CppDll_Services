@@ -6,12 +6,9 @@
 #include ".\Processes_Modules.h"
 #include ".\conv.h"
 
-
-
 class ServiceHandle
 {
     SC_HANDLE _handle = nullptr;
-
     void Close()
     {
         if (_handle != nullptr)
@@ -20,18 +17,14 @@ class ServiceHandle
 
 public:
     ServiceHandle(SC_HANDLE const handle = nullptr) noexcept :_handle(handle) {}
-
     ServiceHandle(ServiceHandle&& other) noexcept : _handle(std::move(other._handle)) {}
-
     ServiceHandle& operator=(SC_HANDLE const handle)
     {
         if (_handle != handle)
         {
             Close();
-
             _handle = handle;
         }
-
         return *this;
     }
 
@@ -42,14 +35,11 @@ public:
             _handle = std::move(other._handle);
             other._handle = nullptr;
         }
-
         return *this;
     }
 
     operator SC_HANDLE() const noexcept { return _handle; }
-
     explicit operator bool() const noexcept { return _handle != nullptr; }
-
     ~ServiceHandle()
     {
         Close();
@@ -65,7 +55,6 @@ std::vector<ServiceStatusProcess> EnumerateServices(
     ServiceString const* groupName)
 {
     std::vector<ServiceStatusProcess> ssps;
-
     auto scHandle = ServiceHandle
     {
        ::OpenSCManager(
@@ -76,7 +65,6 @@ std::vector<ServiceStatusProcess> EnumerateServices(
     auto bytesNeeded = DWORD{ 0 };
     auto servicesReturnedCount = DWORD{ 0 };
     auto resumeHandle = DWORD{ 0 };
-
     do
     {
         if (!EnumServicesStatusEx(
@@ -150,51 +138,35 @@ std::string GetServiceConfig(LPCTSTR lpszServiceName)
         lpszServiceName, // name of service
         SERVICE_QUERY_CONFIG);// need QUERY access
     if (schService == NULL)
-    {
-        //printf("OpenService() failed, error: %d", GetLastError());
-        return " error - no admin privilage  | error - no admin privilage ";
-        //return FALSE;
+    {        
+        return " error - no admin privilage  | error - no admin privilage ";        
     }
-    else {}
-    //printf("OpenService() is OK\n");
 
-// Allocate a buffer for the configuration information.
     lpqscBuf = (LPQUERY_SERVICE_CONFIG)LocalAlloc(LPTR, 4096);
     if (lpqscBuf == NULL)
     {
-        return " error - no admin privilage  | error - no admin privilage ";
-        //return FALSE;
+        return " error - no admin privilage  | error - no admin privilage ";        
     }
 
     lpqscBuf2 = (LPSERVICE_DESCRIPTION)LocalAlloc(LPTR, 4096);
     if (lpqscBuf2 == NULL)
     {
-        return " error - no admin privilage  | error - no admin privilage ";
-        //return FALSE;
+        return " error - no admin privilage  | error - no admin privilage ";        
     }
-    // Get the Windows service configuration information.
     if (!QueryServiceConfig(schService, lpqscBuf, 4096, &dwBytesNeeded))
-    {
-        //printf("QueryServiceConfig() failed, error: %d", GetLastError());
+    {        
         bSuccess = FALSE;
     }
-    else
-        //printf("QueryServiceConfig() is OK\n");
-
-        if (!QueryServiceConfig2(schService, SERVICE_CONFIG_DESCRIPTION, (LPBYTE)lpqscBuf2, 4096, &dwBytesNeeded))
+    if (!QueryServiceConfig2(schService, SERVICE_CONFIG_DESCRIPTION, (LPBYTE)lpqscBuf2, 4096, &dwBytesNeeded))
         {
-            return " error - no admin privilage  | error - no admin privilage ";
-            bSuccess = FALSE;
-        }
-        else {}
+            return " error - no admin privilage  | error - no admin privilage ";        
+        }   
     
     if (lpqscBuf->lpLoadOrderGroup != NULL) 
     {                
         std::stringstream ss;
-        ss << lpqscBuf->dwServiceType;
-        //std::string strPid = ss.str();
-        str_group_path += conv::stdlocal::convert(lpqscBuf->lpLoadOrderGroup) + rl;
-        //str_group_path += strPid +":"+conv::stdlocal::convert(lpqscBuf->lpDependencies) + rl;
+        ss << lpqscBuf->dwServiceType;        
+        str_group_path += conv::stdlocal::convert(lpqscBuf->lpLoadOrderGroup) + rl;        
     }
     else str_group_path += " " + rl;
     str_group_path += conv::stdlocal::convert(lpqscBuf->lpBinaryPathName);
@@ -206,7 +178,6 @@ std::string GetServiceConfig(LPCTSTR lpszServiceName)
 
 
 std::vector<ServiceStatusProcess> services;
-//std::vector<std::string> 
 int InitInfoServicesWindowSystem()
 {
     ::services.clear();
@@ -221,28 +192,11 @@ int GetCountServicesWindowSystem()
 
 char* GetInfoServicesWindowSystem(int k)
 {   
-    //return new char[20]{" errrorr "};
-       
-
-    //std::string st__ = "error";    
-    //char* cstr = (char*)LocalAlloc(LPTR, st__.size() + 1);
-    //strcpy(cstr,st__.c_str());
-    //return cstr;
-
-
-    std::vector<std::string> strall;
-    int i = 0;
+    std::vector<std::string> strall;    
     int pid = 12345;
-    std::string rl = "|";
-    
-    //if (::services.size() < 1)return "";
-//    if (k<0||k>::services.size())return "";
-    //for (int k = 0; k < services.size(); k++)
+    std::string rl = "|";    
     std::string str_info = "";
 
-
-    //std::wstring wstrProcToSearch;
-    //std::wcin >> wstrProcToSearch;
     const WCHAR* wpszProcToSearch = ::services[k].ServiceName.c_str();
     std::stringstream ss;    
     ss << PIDByName((WCHAR*)wpszProcToSearch);
@@ -263,23 +217,11 @@ char* GetInfoServicesWindowSystem(int k)
         +
         group_path; // group & path
 
-        //std::cout << "\n\n" << str_info << std::endl;
-        //strall.push_back(str_info);
-        //if (i > 5)break;
-        i++;
     
         char* cstr = (char*)LocalAlloc(LPTR, str_info.size() + 1);
         strcpy(cstr, str_info.c_str());
 
-     //st__ = "error";
-    //int nn = st__.size() + 1;
-    //cstr = (char*)LocalAlloc(LPTR, st__.size() + 1);
-    //strcpy(cstr,st__.c_str());
-    //return cstr;
-        
         return cstr;
-    //return str_info;
-    //return strall;
 }
 
 

@@ -115,14 +115,7 @@ bool GetOSVersionString(WCHAR* version, size_t maxlen)
 	WCHAR path[_MAX_PATH];
 	if (!GetSystemDirectoryW(path, _MAX_PATH))
 		return false;
-
-	wcscat_s(path, L"\\kernel32.dll");
-
-	//
-	// Based on example code from this article
-	// http://support.microsoft.com/kb/167597
-	//
-
+	wcscat_s(path, L"\\kernel32.dll");	
 	DWORD handle;
 #if (_WIN32_WINNT >= _WIN32_WINNT_VISTA)
 	DWORD len = GetFileVersionInfoSizeExW(FILE_VER_GET_NEUTRAL, path, &handle);
@@ -161,28 +154,12 @@ bool GetOSVersionString(WCHAR* version, size_t maxlen)
 	return true;
 }
 
-//********************************************************************************************
-
-//---------------------------------------------------------------------------
-// KillProcess
-//
-//  Terminates the specified process.
-//
-//  Parameters:
-//	  dwProcessId - identifier of the process to terminate
-//
-//  Returns:
-//	  TRUE, if successful, FALSE - otherwise.
-//
 #pragma warning(disable : 4996)
 
 BOOL KillProcess(IN DWORD dwProcessId)
 {
 	HANDLE hProcess;
 	DWORD dwError;
-
-	// first try to obtain handle to the process without the use of any
-	// additional privileges
 	hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, dwProcessId);
 	if (hProcess == NULL)
 	{
@@ -190,36 +167,20 @@ BOOL KillProcess(IN DWORD dwProcessId)
 			return FALSE;
 
 		OSVERSIONINFO osvi;
-
-		// determine operating system version
 		osvi.dwOSVersionInfoSize = sizeof(osvi);
 		::GetVersionEx(&osvi);
 		//::GetVersionEx((OSVERSIONINFO*)&osvi);
-		//IsWindow(osvi.);
-
-		// we cannot do anything else if this is not Windows NT
+		//  is not Windows NT
 		if (osvi.dwPlatformId != VER_PLATFORM_WIN32_NT)
 			return SetLastError(ERROR_ACCESS_DENIED), FALSE;
-
-		// enable SE_DEBUG_NAME privilege and try again
 
 		TOKEN_PRIVILEGES Priv, PrivOld;
 		DWORD cbPriv = sizeof(PrivOld);
 		HANDLE hToken;
-
-		// obtain the token of the current thread 
-		if (!OpenThreadToken(GetCurrentThread(),
-			TOKEN_QUERY | TOKEN_ADJUST_PRIVILEGES,
-			FALSE, &hToken))
+		if (!OpenThreadToken(GetCurrentThread(), TOKEN_QUERY | TOKEN_ADJUST_PRIVILEGES, FALSE, &hToken))
 		{
-			if (GetLastError() != ERROR_NO_TOKEN)
-				return FALSE;
-
-			// revert to the process token
-			if (!OpenProcessToken(GetCurrentProcess(),
-				TOKEN_QUERY | TOKEN_ADJUST_PRIVILEGES,
-				&hToken))
-				return FALSE;
+			if (GetLastError() != ERROR_NO_TOKEN) return FALSE;
+			if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY | TOKEN_ADJUST_PRIVILEGES, &hToken))	return FALSE;
 		}
 
 		_ASSERTE(ANYSIZE_ARRAY > 0);
@@ -227,8 +188,6 @@ BOOL KillProcess(IN DWORD dwProcessId)
 		Priv.PrivilegeCount = 1;
 		Priv.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
 		LookupPrivilegeValue(NULL, SE_DEBUG_NAME, &Priv.Privileges[0].Luid);
-
-		// try to enable the privilege
 		if (!AdjustTokenPrivileges(hToken, FALSE, &Priv, sizeof(Priv),
 			&PrivOld, &cbPriv))
 		{
@@ -239,17 +198,11 @@ BOOL KillProcess(IN DWORD dwProcessId)
 
 		if (GetLastError() == ERROR_NOT_ALL_ASSIGNED)
 		{
-			// the SE_DEBUG_NAME privilege is not present in the caller's
-			// token
 			CloseHandle(hToken);
 			return SetLastError(ERROR_ACCESS_DENIED), FALSE;
 		}
-
-		// try to open process handle again
 		hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, dwProcessId);
 		dwError = GetLastError();
-
-		// restore the original state of the privilege
 		AdjustTokenPrivileges(hToken, FALSE, &PrivOld, sizeof(PrivOld),
 			NULL, NULL);
 		CloseHandle(hToken);
@@ -257,18 +210,13 @@ BOOL KillProcess(IN DWORD dwProcessId)
 		if (hProcess == NULL)
 			return SetLastError(FALSE), NULL;
 	}
-
-	// terminate the process
 	if (!TerminateProcess(hProcess, (UINT)-1))
 	{
 		dwError = GetLastError();
 		CloseHandle(hProcess);
 		return SetLastError(dwError), FALSE;
 	}
-
 	CloseHandle(hProcess);
-
-	// completed successfully
 	return TRUE;
 }
 
@@ -276,9 +224,7 @@ typedef LONG	NTSTATUS;
 typedef LONG	KPRIORITY;
 
 #define NT_SUCCESS(Status) ((NTSTATUS)(Status) >= 0)
-
 #define STATUS_INFO_LENGTH_MISMATCH      ((NTSTATUS)0xC0000004L)
-
 #define SystemProcessesAndThreadsInformation	5
 
 typedef struct _CLIENT_ID {
@@ -320,10 +266,6 @@ typedef struct _SYSTEM_THREADS {
 	LONG			WaitReason;
 } SYSTEM_THREADS, * PSYSTEM_THREADS;
 
-// Note that the size of the SYSTEM_PROCESSES structure is different on
-// NT 4 and Win2K, but we don't care about it, since we don't access neither
-// IoCounters member nor Threads array
-
 typedef struct _SYSTEM_PROCESSES {
 	ULONG			NextEntryDelta;
 	ULONG			ThreadCount;
@@ -343,18 +285,4 @@ typedef struct _SYSTEM_PROCESSES {
 #endif
 	SYSTEM_THREADS  Threads[1];
 } SYSTEM_PROCESSES, * PSYSTEM_PROCESSES;
-
-//---------------------------------------------------------------------------
-// KillProcessTreeNtHelper
-//
-//  This is a recursive helper function that terminates all the processes
-//  started by the specified process and them terminates the process itself
-//
-//  Parameters:
-//	  pInfo       - processes information
-//	  dwProcessId - identifier of the process to terminate
-//
-//  Returns:
-//	  Win32 error code.
-//
 

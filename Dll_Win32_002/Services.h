@@ -102,15 +102,12 @@ std::vector<ServiceStatusProcess> EnumerateServices(
 
 
 extern "C" Processes_Modules_API char* GetInfoServicesWindowSystem(int k);
-//extern "C" Processes_Modules_API 
 extern "C" Processes_Modules_API std::string GetServiceConfig(LPCTSTR lpszServiceName);
 extern "C" Processes_Modules_API int __stdcall InitInfoServicesWindowSystem();
 extern "C" Processes_Modules_API int __stdcall GetCountServicesWindowSystem();
 
-
-
-bool _StartService(const TCHAR* name);
-bool _StopService(const TCHAR* name);
+extern "C" Processes_Modules_API bool _StartService(const TCHAR* name);
+extern "C" Processes_Modules_API bool _StopService(const TCHAR* name);
 
 
 

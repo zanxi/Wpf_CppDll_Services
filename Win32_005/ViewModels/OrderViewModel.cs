@@ -17,30 +17,19 @@ namespace Win32_005.ViewModels
         public ICollectionView OrdersView { get; set; }
         public ICollectionView OrdersIconView { get; set; }
 
-        //public ObservableCollection<Order> OrdersView { get; set; }
-        //public ObservableCollection<OrdersIcon> OrdersIconView { get; set; }
-        //public ICollectionView OrdersIconView { get; set; }
-
-
-        // 28 febrary 2020
-        // https://ru.stackoverflow.com/questions/717468/Контекстное-меню-datagrid-Получить-значение?rq=1
-
         public OrdersViewModel()
         {
             IList<Order> orders = new Orders();
-            OrdersView = CollectionViewSource.GetDefaultView(orders);
-            //OrdersView = new Orders();
+            OrdersView = CollectionViewSource.GetDefaultView(orders);            
             IList<OrderIcon> ordersIcon = new OrdersIcon();
             OrdersIconView = CollectionViewSource.GetDefaultView(ordersIcon);
-            //OrdersIconView = new OrdersIcon();
-
+            
             groupByDescriptionCommand = new GroupByDescriptionCommand(this);
             groupByPIDCommand = new GroupByPIDCommand(this);
             groupByStatusCommand = new GroupByStatusCommand(this);
             groupByGroupSystemCommand = new GroupByGroupSystemCommand(this);
             GroupByNameSrvCommand = new GroupByNameSrvCommand(this);
-            contextMenuCommand = new ContextMenuDelegateCommand(o=> ContextMenuClick((Order)o));
-            //datagridMenuCommand = new DataGridDelegateCommand();
+            contextMenuCommand = new ContextMenuDelegateCommand(o=> ContextMenuClick((Order)o));            
         }
 
         public void ContextMenuClick(Order order)
@@ -95,13 +84,12 @@ namespace Win32_005.ViewModels
         {
             if(value is ReadOnlyObservableCollection<object>)
             {
-                var items = (ReadOnlyObservableCollection<object>)value;
-                Decimal total = 0;
+                var items = (ReadOnlyObservableCollection<object>)value;                
                 foreach(Order element in items)
                 {
-                    //total += element.Description;
+                    
                 }
-                return total.ToString();
+                return "";
             }
             return "";
         }

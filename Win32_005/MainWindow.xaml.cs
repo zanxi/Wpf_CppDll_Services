@@ -17,29 +17,19 @@ using Win32_005.Models;
 
 namespace Win32_005
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         static ViewModels.OrdersViewModel ord = new ViewModels.OrdersViewModel();
         public MainWindow()
         {
             InitializeComponent();            
-            DataContext = ord;
-            
-            //ObservableCollection<OrderIcon> oi=new ObservableCollection<OrderIcon>();
-            //dgSrv.ItemsSource = ord.OrdersView.(ord.OrdersView, (p, p1) => new { Order = p, OrderIcon = p1 });
-            
-            // ItemsSource="{Binding OrdersView}"
+            DataContext = ord;            
         }
 
         private void DataGrid_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             return;
-            
-            // 28 febrary
-            //https://stackoverflow.com/questions/13449413/how-to-acess-datagridcell-on-right-click-on-wpf-datagrid
+                        
 
             var hit = VisualTreeHelper.HitTest((Visual)sender, e.GetPosition((IInputElement)sender));
             DependencyObject cell = VisualTreeHelper.GetParent(hit.VisualHit);

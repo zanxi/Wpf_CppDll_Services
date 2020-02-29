@@ -5,10 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Win32_005.ViewModels"        
         mc:Ignorable="d"
-        Title="Windows services (start, stop, restart)" Height="850" HorizontalAlignment="Center">
-    <!--
-    https://ru.stackoverflow.com/questions/717468/Контекстное-меню-datagrid-Получить-значение?rq=1
-    -->
+        Title="Windows services (start, stop, restart)" Height="850" HorizontalAlignment="Center">    
     <Window.Resources>
         <local:GroupsToTotalConverter x:Key="groupsConverter" />        
         <ContextMenu x:Key="conMenu">
